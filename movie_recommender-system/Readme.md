@@ -1,5 +1,5 @@
 # Item based movie recommender system using Django frame
-language: python, html, css, javascript
+Language: python, html, css, javascript
 
 ## Installation
 
@@ -29,5 +29,5 @@ http://127.0.0.1:8000/
 Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
 
 ### Challenge
-1. Cold start problem. I use most rating movies(most popular) in this system.
+1. Cold start problem. I use most rating movies(most popular) to recommend for new user in this project.
 2. Rating is not enough. Since it's item based recommender. It's supposed to have much more number of users than number of items. Thus some user might have 0 similar score items. In this project, number of ratings more than 100 is ideal
