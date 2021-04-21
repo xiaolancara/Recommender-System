@@ -34,5 +34,6 @@ Movie Item: Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) 
 Server: db.sqlite3
 
 ## Challenge
-1. Cold start problem. I use most rating movies(most popular) to recommend for new user in this project.
-2. The total number of rating is not enough. Since it's item based recommender, it's supposed to have much more number of users than number of items. Thus some users might have 0 similar score items if number of rating in this system is not enough. Sol: In this project, number of ratings more than 100 is ideal.
+1. User cold start problem. I use most rating movies(most popular) to recommend for new user in this project.
+2. Movie cold start problem. Movie items that haven't been rated by users will not recommend to any user. Sol: Adding content filtering.
+3. The total number of rating is not enough. Since it's item based recommender, it's supposed to have much more number of users than number of items. Thus some users might have 0 similar score items if number of rating in this system is not enough. Sol: In this project, number of ratings more than 100 is ideal.
