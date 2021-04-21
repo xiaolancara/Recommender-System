@@ -18,6 +18,11 @@ http://127.0.0.1:8000/
 ## function
 user sign up
 user log in
-user library
+user rating
+user list library
+movie info and trailer video
 you might like
 search movie
+
+# data
+[Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
