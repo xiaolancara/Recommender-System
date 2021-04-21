@@ -28,7 +28,7 @@ Recommend movies based on predicting rating
 - search movie
 - upload csv file (update movie list)
 
-## Database
+## Database 
 Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list and added poster and trailer link
 
 ### Challenge
