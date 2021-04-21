@@ -6,16 +6,16 @@ language: python, html, css, javascript
 >pip install -r requirements.txt
 >
 
-## run server on terminal
+## Run server on terminal
 python manage.py runserver
 
-## open the local website
+## Open the local website
 http://127.0.0.1:8000/
 
-## algorithm
-**item based** collaborative filtering in this project
+## Algorithm
+**Item based** collaborative filtering in this project
 
-## function
+## Function
 user sign up
 user log in
 user rating
@@ -23,6 +23,7 @@ user list library
 movie info and trailer video
 you might like
 search movie
+upload csv file (update movie list)
 
-## data
-[Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
+## Database
+Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
