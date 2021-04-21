@@ -29,7 +29,7 @@ Recommend movies based on predicting rating
 - upload csv file (update movie list)
 
 ## Database
-Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
+Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list and added poster and trailer link
 
 ### Challenge
 1. Cold start problem. I use most rating movies(most popular) to recommend for new user in this project.
