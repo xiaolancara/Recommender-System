@@ -1,4 +1,4 @@
-# Ttem based movie recommender system using Django frame
+# Item based movie recommender system using Django frame
 language: python, html, css, javascript
 
 ## Installation
