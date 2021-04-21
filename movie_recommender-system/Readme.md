@@ -16,7 +16,8 @@ http://127.0.0.1:8000/
 ## Algorithm
 **Item based** collaborative filtering in this project
 
-Recommend movies based on predicting rating 
+Recommend movies based on predicting rating, see guidline in [Movie Algorithm- Item_based.ipynb](https://github.com/xiaolancara/Recommender-System/blob/main/movie_recommender-system/Movie%20Algorithm-%20Item_based.ipynb)
+![image](https://user-images.githubusercontent.com/63172262/115623356-ef22a880-a2ad-11eb-970b-7bcde6f8f7ec.png)
 
 ## Function
 - user sign up
@@ -28,9 +29,12 @@ Recommend movies based on predicting rating
 - search movie
 - upload csv file (update movie list)
 
-## Database
-Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list
+## Database 
+Movie Item: Export csv file from [Imdb](https://www.imdb.com/list/ls022753498/) top 30 popular movies list and added poster and trailer link
 
-### Challenge
-1. Cold start problem. I use most rating movies(most popular) to recommend for new user in this project.
-2. Rating is not enough. Since it's item based recommender. It's supposed to have much more number of users than number of items. Thus some users might have 0 similar score items. In this project, number of ratings more than 100 is ideal
+Server: db.sqlite3
+
+## Challenge
+1. User cold start problem. Sol: I use most rating movies(most popular) to recommend for new user in this project.
+2. Movie cold start problem. Movie items that haven't been rated by users will not recommend to any user. Sol: Adding content filtering.
+3. The total number of rating is not enough. Since it's item based recommender, it's supposed to have much more number of users than number of items. Thus some users might have 0 similar score items if number of rating in this system is not enough. Sol: In this project, number of ratings more than 100 is ideal.
