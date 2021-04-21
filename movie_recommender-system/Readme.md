@@ -7,7 +7,8 @@ Language: python, html, css, javascript
 >
 
 ## Run server on terminal
-python manage.py runserver
+>python manage.py runserver
+>
 
 ## Open the local website
 http://127.0.0.1:8000/
