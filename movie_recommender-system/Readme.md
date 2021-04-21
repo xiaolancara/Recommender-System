@@ -16,6 +16,8 @@ http://127.0.0.1:8000/
 ## Algorithm
 **Item based** collaborative filtering in this project
 
+Recommend movies based on predicting rating 
+
 ## Function
 - user sign up
 - user log in
