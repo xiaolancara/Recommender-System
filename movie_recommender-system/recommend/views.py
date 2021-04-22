@@ -11,6 +11,9 @@ from django.db.models import Case, When
 import pandas as pd
 import io, csv
 import numpy as np
+from sklearn.metrics import mean_squared_error
+from surprise import Dataset, Reader, SVD, accuracy
+from surprise.model_selection import train_test_split
 
 # Create your views here.
 
@@ -112,42 +115,108 @@ def recommend(request):
         raise Http404
 
 
-    movie_rating=pd.DataFrame(list(UserRating.objects.all().values()))
-    movie_rating.to_csv('movie_rating.csv')
-    print(movie_rating)
-    if "user_id" not in movie_rating.columns.values:
+    df_rating=pd.DataFrame(list(UserRating.objects.all().values()))
+    df_rating.to_csv('movie_rating.csv')
+    print(df_rating)
+    if "user_id" not in df_rating.columns.values:
         return render(request, 'recommend/recommend.html', None)
-    rated_user=movie_rating.user_id.unique()
+    rated_user=df_rating.user_id.unique()
     current_user_id= request.user.id
 
 	# if new user not rated any movie
     if current_user_id not in rated_user:
         # return popular
-        popular_movie_list = list(movie_rating.movie_id.value_counts().index)
+        popular_movie_list = list(df_rating.movie_id.value_counts().index)
         movie_list = list(Movie.objects.filter(id__in=popular_movie_list)[:10])
         context = {'movie_list': movie_list}
         return render(request, 'recommend/recommend.html', context)
 
     # item_based CF RecSys
-    userRatings = movie_rating.pivot_table(index=['user_id'],columns=['movie_id'],values='rating')
-    corrMatrix = userRatings.corr(method='pearson').fillna(0)
+    class item_basedCF:
+        def __init__(self):
+            self.userRatings = df_rating.pivot_table(index=['user_id'], columns=['movie_id'], values='rating')
+            self.corrMatrix = self.userRatings.corr(method='pearson').fillna(0)
+            self.cf_rms = mean_squared_error(df_rating['rating'], self.evaluate()['predict_rating'], squared=False)
 
-    myRatings = userRatings.loc[current_user_id].dropna()
+        def evaluate(self):
+            df_predict = pd.DataFrame()
+            for user_i in self.userRatings.index:
+                myRatings = self.userRatings.loc[user_i].dropna()
 
-    similar_candidates = pd.DataFrame()
-    for i in list(corrMatrix.index):
-        # retrieve similar movies for movie i
-        similar_movies = corrMatrix[i]
-        # substract to similar score between movie i and rated movies
-        similar_movies = similar_movies[similar_movies.index.isin(myRatings.index)]
-        # calculate predict rating
-        predict_ratings = sum(myRatings * similar_movies) / (sum(np.abs(similar_movies))+0.01)
-        similar_candidates = similar_candidates.append([predict_ratings])
-    similar_candidates.index = corrMatrix.index
-    similar_candidates = similar_candidates[~similar_candidates.index.isin(myRatings.index)]
-    similar_candidates.columns = ['PredictScore']
-    similar_candidates.sort_values(by='PredictScore', inplace=True, ascending=False)
-    movie_list = list(Movie.objects.filter(id__in=list(similar_candidates.index))[:10])
+                for movie_i in list(myRatings.index):
+                    # retrieve similar movies for movie i
+                    similar_movies = self.corrMatrix[movie_i]
+                    # substract to similar score between movie i and rated movies
+                    similar_movies = similar_movies[similar_movies.index.isin(myRatings.index)]
+                    # calculate predict rating
+                    # adding 0.01 to avoid 0 similar score in low number of ratings system
+                    predict_ratings = sum(myRatings * similar_movies) / (sum(np.abs(similar_movies)) + 0.01)
+                    df_predict = df_predict.append([[user_i, movie_i, predict_ratings]])
+
+            df_predict.columns = ['user_id', 'movie_id', 'predict_rating']
+            df_predict.reset_index(drop=True, inplace=True)
+
+            return df_predict
+
+        def recommend_movie(self, user_id):
+            myRatings = self.userRatings.loc[user_id].dropna()
+            similar_candidates = pd.DataFrame()
+            for i in list(self.corrMatrix.index):
+                # retrieve similar movies for movie i
+                similar_movies = self.corrMatrix[i]
+                # substract to similar score between movie i and rated movies
+                similar_movies = similar_movies[similar_movies.index.isin(myRatings.index)]
+                # calculate predict rating
+                predict_ratings = sum(myRatings * similar_movies) / (sum(np.abs(similar_movies)) + 0.01)
+                similar_candidates = similar_candidates.append([predict_ratings])
+            similar_candidates.index = self.corrMatrix.index
+            # substract recommend movies that  have rated
+            similar_candidates = similar_candidates[~similar_candidates.index.isin(myRatings.index)]
+            similar_candidates.columns = ['predict_rating']
+            similar_candidates.sort_values(by='predict_rating', inplace=True, ascending=False)
+            return similar_candidates[:10]
+    # svd based recSys
+    class svd_based:
+        def __init__(self):
+            # instantiate a reader and read in our rating data
+            reader = Reader(rating_scale=(1, 5))
+            data = Dataset.load_from_df(df_rating[['user_id', 'movie_id', 'rating']], reader)
+
+            # train SVD on 75% of known rates
+            trainset, testset = train_test_split(data, test_size=.25, random_state=30)
+            self.algorithm = SVD()
+            self.algorithm.fit(trainset)
+            predictions = self.algorithm.test(testset)
+
+            # check the accuracy using Root Mean Square Error
+            self.svd_rms = accuracy.rmse(predictions)
+
+        def pred_user_rating(self, ui):
+            if ui in df_rating.user_id.unique():
+                ui_list = df_rating[df_rating.user_id == ui].movie_id.tolist()
+                d = df_rating.movie_id.unique()
+                d = [v for v in d if not v in ui_list]
+                predictedL = []
+                for j in d:
+                    predicted = self.algorithm.predict(ui, j)
+                    predictedL.append((j, predicted[3]))
+                pdf = pd.DataFrame(predictedL, columns=['movieid', 'ratings'])
+                pdf.sort_values('ratings', ascending=False, inplace=True)
+                pdf.set_index('movieid', inplace=True)
+                return pdf.head(10)
+            else:
+                print("User Id does not exist in the list!")
+                return None
+
+    itembased_object = item_basedCF()
+    svdbased_object = svd_based()
+    if itembased_object.cf_rms > svdbased_object.svd_rms:
+        movie_rec = svdbased_object.pred_user_rating(current_user_id)
+        print('svd based: ', svdbased_object.svd_rms)
+    else:
+        movie_rec = itembased_object.recommend_movie(current_user_id)
+        print('item based: ', itembased_object.cf_rms)
+    movie_list = list(Movie.objects.filter(id__in=list(movie_rec.index)))
 
     context = {'movie_list': movie_list}
     return render(request, 'recommend/recommend.html', context)
