@@ -15,6 +15,7 @@ http://127.0.0.1:8000/
 
 ## Algorithm
 **Item based** collaborative filtering in this project
+
 **SVD based** SVD in this project using surprise library
 
 The system will choose either one based on the lower RMSE predict score
