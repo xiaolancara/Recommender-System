@@ -1,4 +1,4 @@
-# Item based movie recommender system using Django frame
+# Item and SVD based movie recommender system using Django frame
 Language: python, html, css, javascript
 
 ## Installation
@@ -15,6 +15,9 @@ http://127.0.0.1:8000/
 
 ## Algorithm
 **Item based** collaborative filtering in this project
+**SVD based** SVD in this project using surprise library
+
+The system will choose either one based on the lower RMSE predict score
 
 Recommend movies based on predicting rating, see guidline in [Movie Algorithm- Item_based.ipynb](https://github.com/xiaolancara/Recommender-System/blob/main/movie_recommender-system/Movie%20Algorithm-%20Item_based.ipynb)
 ![image](https://user-images.githubusercontent.com/63172262/115623356-ef22a880-a2ad-11eb-970b-7bcde6f8f7ec.png)
