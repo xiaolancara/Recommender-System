@@ -13,6 +13,8 @@ Language: python, html, css, javascript
 ## Open the local website
 http://127.0.0.1:8000/
 
+The Heroku website I deployed is https://caramovie.herokuapp.com/
+
 ## Algorithm
 **Item based** collaborative filtering in this project
 
