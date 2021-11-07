@@ -9,7 +9,7 @@ The [application](https://github.com/xiaolancara/Recommender-System/blob/main/Mu
 The user play counts dataset is downloaded from [the Million Song Dataset](http://millionsongdataset.com/challenge/).
 The Lyrics are collected vias REST API from **Twift**.
 
-### Setup Twift
+## *Setup Twift*
 -----
 
 This package depends on ``lxml``, ``requests``, and ``google``. These should be
