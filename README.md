@@ -2,7 +2,7 @@
 
 # Related Projects
 ## 1. Music Recommender System
-The project of [Music Recommender System](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/RecSys_FinalProject%20(1).ipynb) is built based on **Content Based, Item & User Based CF, SVD and ALS model Based** Algorithm
+The project of [Music Recommender System](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/RecSys_FinalProject%20(1).ipynb) is built based on **Content Based, Item & User Based CF, SVD and ALS model Based** Algorithm for **Implicit Data**
 
 The [application](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/Gui_interaction.py) is built using **PySimpleGUI**. 
 
