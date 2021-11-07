@@ -2,7 +2,10 @@
 
 # Related Projects
 ## 1. Music Recommender System
-The project of [Music Recommender System] is built based on **Content Based, Item & User Based CF, SVD and ALS model Based** Algorithm
+The project of [Music Recommender System](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/RecSys_FinalProject%20(1).ipynb) is built based on **Content Based, Item & User Based CF, SVD and ALS model Based** Algorithm
+
+The [application](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/Gui_interaction.py) is built using **PySimpleGUI**. 
+
 The user play counts dataset is downloaded from [the Million Song Dataset](http://millionsongdataset.com/challenge/).
 The Lyrics are collected vias REST API from **Twift**.
 
@@ -23,7 +26,7 @@ command:
 
     tswift
  
-The [application](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/Gui_interaction.py) is built using **PySimpleGUI**. 
+
 
 ## 2. Movie Recommender System
 The **Django Based Web Framework Movie Application** I deployed is [https://caramovie.herokuapp.com/](https://caramovie.herokuapp.com/)
