@@ -22,7 +22,8 @@ command:
 .. code::
 
     tswift
-    
+ 
+The [application](https://github.com/xiaolancara/Recommender-System/blob/main/MusicRecSys_FinalProject/Gui_interaction.py) is built using **PySimpleGUI**. 
 
 ## 2. Movie Recommender System
 The **Django Based Web Framework Movie Application** I deployed is [https://caramovie.herokuapp.com/](https://caramovie.herokuapp.com/)
