@@ -28,3 +28,5 @@ command:
 The **Django Based Web Framework Movie Application** I deployed is [https://caramovie.herokuapp.com/](https://caramovie.herokuapp.com/)
 
 The details of codes, algoritms and run steps can be checked from [cara_movie_recommender](https://github.com/xiaolancara/cara_movie_recommender).
+
+![image](https://github.com/xiaolancara/cara_movie_recommender/blob/main/website%20page/Home%20page.JPG)
