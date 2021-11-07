@@ -4,9 +4,9 @@
 ## 1. Music Recommender System
 The project of [Music Recommender System] is built based on **Content Based, Item & User Based CF, SVD and ALS model Based** Algorithm
 The user play counts dataset is downloaded from [the Million Song Dataset](http://millionsongdataset.com/challenge/).
-The Lyrics are collected vias REST API from ***Twift*.
+The Lyrics are collected vias REST API from **Twift**.
 
-Setup
+Setup Twift
 -----
 
 This package depends on ``lxml``, ``requests``, and ``google``. These should be
